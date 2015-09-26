@@ -1,25 +1,33 @@
 {application, eredis_pool,
  [
-  {description, ""},
+  {description, "forked by zhongjin"},
   {vsn, "1.1"},
   {registered, []},
   {applications, [
                   kernel,
-                  stdlib
+                  stdlib,
+                  lager
                  ]},
   {mod, { eredis_pool_app, []}},
-  {env, []}
-
-%% sample configuration.
-%%
-%%  {env, [
-%%          {pools, [
-%%                   {dbsrv, [
-%%                              {size, 10},
-%%                              {max_overflow, 30}
-%%                             ]}
-%%	          ]}
-%%        ]}
-%%
+  {env, [
+        {global_or_local, local},
+        {pools, [
+                 {default, [
+                            {size, 10},
+                            {max_overflow, 20}
+                           ], []},
+                 {pool1, [
+                            {size, 30},
+                            {max_overflow, 20}
+                         ],
+                         [
+                            {host, "192.168.33.14"},
+                            {port, 6379},
+                            {reconnect_sleep, 100}
+                         ]}
+                ]}
+      ]}
 
 ]}.
+
+

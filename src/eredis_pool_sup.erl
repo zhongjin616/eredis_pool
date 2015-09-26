@@ -1,7 +1,7 @@
 -module(eredis_pool_sup).
 
 -behaviour(supervisor).
-
+-compile({parse_transform, lager_transform}).
 %% Include
 -include_lib("eunit/include/eunit.hrl").
 
@@ -21,7 +21,9 @@
 
 start_link() ->
     {ok, Pools} = application:get_env(eredis_pool, pools),
+    lager:info("==>L~p sup:start_link# Pools= ~p", [?LINE, Pools]),
     {ok, GlobalOrLocal} = application:get_env(eredis_pool, global_or_local),
+    lager:info("==>L~p sup:start_link# Ret= ~p", [?LINE, GlobalOrLocal]),
     start_link(Pools, GlobalOrLocal).
 
 start_link(Pools, GlobalOrLocal) ->
@@ -69,6 +71,7 @@ delete_pool(PoolName) ->
 %% ===================================================================
 
 init([Pools, GlobalOrLocal]) ->
+    lager:info("==>L~p sup:init callback...", [?LINE]),
     RestartStrategy = one_for_one,
     MaxRestarts = 10,
     MaxSecondsBetweenRestarts = 10,

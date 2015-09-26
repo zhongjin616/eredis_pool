@@ -27,7 +27,7 @@
 %%%===================================================================
 
 start() ->
-    application:start(?MODULE).
+    application:ensure_all_started(?MODULE).
 
 stop() ->
     application:stop(?MODULE).
